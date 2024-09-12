@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="371c786e-2158-4798-96ef-01f97cdda174" ChangeDateTime="09/12/2024 07:56:16">
+    <Property Name="ElementName" Value="[dbo].[Trigger_User_Delete]" />
+    <Property Name="ElementType" Value="SqlDmlTrigger" />
+    <Property Name="ParentElementName" Value="[dbo].[User]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[TR_User_Delete]" />
+  </Operation>
+</Operations>

@@ -1,0 +1,6 @@
+﻿CREATE PROCEDURE [dbo].[SP_User_Disable]
+	@id UNIQUEIDENTIFIER
+AS
+BEGIN
+	DELETE FROM [User] WHERE [UserId] = @id
+END

@@ -1,0 +1,23 @@
+﻿CREATE TABLE [dbo].[User]
+(
+	[UserId] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY DEFAULT NEWID(),
+	[Email] VARCHAR(320) NOT NULL CONSTRAINT UK_User_Email UNIQUE,
+	[Password] VARBINARY(32) NOT NULL,
+	[Salt] UNIQUEIDENTIFIER NOT NULL,
+	[CreatedAt] DATETIME2 NOT NULL DEFAULT GETDATE(),
+	[DisabledAt] DATETIME2
+)
+
+GO
+
+CREATE TRIGGER [dbo].[TR_User_Delete]
+    ON [dbo].[User]
+    INSTEAD OF DELETE
+    AS
+    BEGIN
+        SET NoCount ON
+		DECLARE @id UNIQUEIDENTIFIER = (SELECT [UserId] FROM [deleted])
+		UPDATE [User]
+			SET [DisabledAt] = GETDATE()
+			WHERE [UserId] = @id
+    END
