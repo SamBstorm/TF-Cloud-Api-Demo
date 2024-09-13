@@ -1,15 +1,19 @@
-﻿using DAL_API.Entities;
+﻿using Common_API.Repositories;
+using DAL_API.Entities;
 using DAL_API.Mapper;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace DAL_API.Services
 {
-    public class UserService
+    public class UserService : BaseService, IUserRepository<User>
     {
-        private string _connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Cloud-API;Integrated Security=True;Encrypt=False;Trust Server Certificate=True;";
+        public UserService(IConfiguration config) : base(config, "Cloud-API")
+        {
+        }
 
         public Guid Insert(User user)
         {

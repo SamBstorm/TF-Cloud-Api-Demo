@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Common_API.Repositories;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WEB_API.Mapper;
 using WEB_API.Models;
+using BLL = BLL_API.Entities;
 
 namespace WEB_API.Controllers
 {
@@ -9,8 +11,8 @@ namespace WEB_API.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private BLL_API.Services.UserService _userService;
-        public UserController(BLL_API.Services.UserService userService)
+        private IUserRepository<BLL.User> _userService;
+        public UserController(IUserRepository<BLL.User> userService)
         {
             _userService = userService;
         }

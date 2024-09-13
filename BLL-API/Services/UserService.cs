@@ -1,5 +1,7 @@
 ﻿using BLL_API.Entities;
 using BLL_API.Mapper;
+using Common_API.Repositories;
+using DAL = DAL_API.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +9,11 @@ using System.Text;
 
 namespace BLL_API.Services
 {
-    public class UserService
+    public class UserService : IUserRepository<User>
     {
-        private DAL_API.Services.UserService _service;
+        private IUserRepository<DAL.User> _service;
 
-        public UserService(DAL_API.Services.UserService service)
+        public UserService(IUserRepository<DAL.User> service)
         {
             _service = service;
         }

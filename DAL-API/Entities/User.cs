@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Common_API.Entities;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace DAL_API.Entities
 {
-    public class User
+    public class User : IUser
     {
         public Guid UserId { get; set; }
         public string Email { get; set; }

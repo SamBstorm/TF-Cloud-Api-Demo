@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Common_API.Entities;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 
 namespace BLL_API.Entities
 {
-    public class User
+    public class User : IUser
     {
         private string _email;
         private string _password;

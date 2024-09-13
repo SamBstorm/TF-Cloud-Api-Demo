@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BLL-API\BLL-API.csproj" />
+    <ProjectReference Include="..\Common-API\Common-API.csproj" />
     <ProjectReference Include="..\DAL-API\DAL-API.csproj" />
   </ItemGroup>
 
