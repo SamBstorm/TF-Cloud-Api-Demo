@@ -1,6 +1,9 @@
 using D = DAL_API;
 using B = BLL_API;
 using Common_API.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace WEB_API
 {
@@ -9,15 +12,32 @@ namespace WEB_API
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
             // Add services to the container.
             builder.Services.AddScoped<IUserRepository<D.Entities.User>,D.Services.UserService>();
             builder.Services.AddScoped<IUserRepository<B.Entities.User>, B.Services.UserService>();
 
             builder.Services.AddControllers();
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            //JWT
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options => {
+                    options.SaveToken = true;
+                    options.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = builder.Configuration["jwt:issuer"],
+                        ValidAudience = builder.Configuration.GetSection("jwt").GetValue<string>("audience"),
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["jwt:secretKey"])),
+                        ClockSkew = TimeSpan.FromSeconds(10)
+                    };
+                });
 
             var app = builder.Build();
 
@@ -28,6 +48,7 @@ namespace WEB_API
                 app.UseSwaggerUI();
             }
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 
