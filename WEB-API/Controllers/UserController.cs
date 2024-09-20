@@ -29,7 +29,7 @@ namespace WEB_API.Controllers
         }
 
         [HttpGet("{id:guid}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "admin")]
         public IActionResult Get(Guid id)
         {
             try
@@ -84,7 +84,7 @@ namespace WEB_API.Controllers
             JwtSecurityToken token = new JwtSecurityToken(
                 _config["jwt:issuer"],
                 _config["jwt:audience"],
-                new List<Claim>() { new Claim("email", model.Email) },
+                new List<Claim>() { new Claim(ClaimTypes.Email, model.Email) },
                 expires : DateTime.Now.AddMinutes(2),
                 signingCredentials : credentials
                 );

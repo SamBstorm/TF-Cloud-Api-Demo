@@ -4,6 +4,7 @@ using Common_API.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Security.Claims;
 
 namespace WEB_API
 {
@@ -38,6 +39,18 @@ namespace WEB_API
                         ClockSkew = TimeSpan.FromSeconds(10)
                     };
                 });
+
+            builder.Services.AddAuthorization(options => {
+                options.AddPolicy("admin", policyBuilder =>
+                {
+                    policyBuilder
+                        .RequireAuthenticatedUser()
+                        .RequireAssertion(context => context.User.HasClaim(ClaimTypes.Email, "admin@admin"))
+                        //.RequireClaim("email", new string[] { "admin@admin" });
+                        .Build();
+                });
+            });
+
 
             var app = builder.Build();
 
